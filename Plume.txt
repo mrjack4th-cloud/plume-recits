@@ -1,0 +1,4 @@
+[
+  { "title": "Mon poème", "file": "poeme.txt" },
+  { "title": "Histoire courte", "file": "histoire.txt" }
+]
