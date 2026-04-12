@@ -14,7 +14,6 @@
   --accent:#7c3aed;
 }
 
-/* GLOBAL */
 body{
   margin:0;
   font-family:Inter, system-ui;
@@ -98,7 +97,7 @@ h1{
   gap:20px;
 }
 
-/* CARD TEXTE */
+/* CARD */
 .card{
   background:white;
   padding:20px;
@@ -150,6 +149,9 @@ h1{
   max-height:400px;
   line-height:1.7;
   white-space:pre-line;
+
+  /* 🔒 anti copie */
+  user-select:none;
 }
 
 footer{
@@ -207,8 +209,11 @@ document.getElementById("logoutBtn").onclick = ()=>{
 };
 
 // 📚 Charger les textes
-fetch("https://plume-et-recits.netlify.app/texts.json")
-.then(res=>res.json())
+fetch("https://plume-recits.netlify.app/texts.json")
+.then(res=>{
+  console.log("Status:", res.status);
+  return res.json();
+})
 .then(data=>{
   const gallery = document.getElementById("gallery");
 
@@ -232,12 +237,14 @@ fetch("https://plume-et-recits.netlify.app/texts.json")
 
         document.getElementById("reader").style.display = "flex";
       }catch(e){
+        console.error(e);
         alert("Impossible de charger le texte.");
       }
     };
   });
 })
-.catch(()=>{
+.catch(err=>{
+  console.error(err);
   document.getElementById("gallery").innerHTML =
     "<p style='text-align:center'>Erreur de chargement des textes.</p>";
 });
@@ -248,6 +255,21 @@ document.getElementById("reader").onclick = (e)=>{
     e.currentTarget.style.display = "none";
   }
 };
+
+// 🔒 PROTECTION ANTI-COPIE
+
+// clic droit bloqué
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// raccourcis clavier bloqués
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && ["c","a","x","u","s"].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
+// drag bloqué
+document.addEventListener("dragstart", e => e.preventDefault());
 </script>
 
 </body>
